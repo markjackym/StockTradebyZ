@@ -1,0 +1,25 @@
+services:
+  dashboard:
+    image: hyojoo/stocktradebyz:latest
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - stock-data:/app/data
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  pipeline:
+    image: hyojoo/stocktradebyz:latest
+    build: .
+    command: ["pipeline"]
+    volumes:
+      - stock-data:/app/data
+    env_file:
+      - .env
+    profiles:
+      - cli
+
+volumes:
+  stock-data:
