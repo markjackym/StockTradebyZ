@@ -1,0 +1,23 @@
+name: Build & Push Docker Image
+
+on:
+  push:
+    branches: [markjackym-patch-1]
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          username: hyojoo
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: hyojoo/stocktradebyz:latest
