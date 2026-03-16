@@ -1,0 +1,69 @@
+# llm_review.yaml
+# LLM 图表复评配置（支持任意 OpenAI 兼容 API）
+# 相对路径基于项目根目录
+
+# ══════════════════════════════════════════════════
+# API 配置（核心：修改这三项即可切换到任意 API）
+# ══════════════════════════════════════════════════
+
+# API 基础地址（必须兼容 OpenAI Chat Completions 格式）
+# 常见提供商示例：
+#   OpenAI:        https://api.openai.com/v1
+#   Deepseek:      https://api.deepseek.com/v1
+#   通义千问:       https://dashscope.aliyuncs.com/compatible-mode/v1
+#   智谱 GLM:      https://open.bigmodel.cn/api/paas/v4
+#   Moonshot:      https://api.moonshot.cn/v1
+#   硅基流动:       https://api.siliconflow.cn/v1
+#   Ollama 本地:   http://localhost:11434/v1
+#   vLLM 本地:     http://localhost:8000/v1
+#   Gemini:        https://generativelanguage.googleapis.com/v1beta/openai
+api_base: https://api.openai.com/v1
+
+# API Key（三选一，优先级：环境变量 > api_key > api_key_env）：
+#   方式1 - 设置环境变量 LLM_API_KEY（推荐，见 .env.example）
+#   方式2 - 直接填写密钥：
+# api_key: sk-your-key-here
+#   方式3 - 指定环境变量名：
+api_key_env: LLM_API_KEY
+
+# 模型名称
+model: gpt-4o
+
+# ══════════════════════════════════════════════════
+# 模型参数
+# ══════════════════════════════════════════════════
+
+# 生成温度（0~2，越低越确定性）
+temperature: 0.2
+
+# 最大输出 token 数
+max_tokens: 4096
+
+# ══════════════════════════════════════════════════
+# 路径配置
+# ══════════════════════════════════════════════════
+
+# 候选列表 JSON
+candidates: data/candidates/candidates_latest.json
+
+# 候选图表目录（其下按 pick_date 分目录）
+kline_dir: data/kline
+
+# 评分结果输出目录
+output_dir: data/review
+
+# 提示词文件
+prompt_path: agent/prompt.md
+
+# ══════════════════════════════════════════════════
+# 运行参数
+# ══════════════════════════════════════════════════
+
+# 相邻 API 调用间隔（秒）
+request_delay: 5
+
+# true: 跳过已存在单股 JSON（断点续跑）
+skip_existing: false
+
+# 推荐最小分数门槛
+suggest_min_score: 4.0
