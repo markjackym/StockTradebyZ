@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
+# 确保 state 目录存在
+mkdir -p /app/data/state
+
 case "${1:-dashboard}" in
   dashboard)
-    echo "[entrypoint] 启动 Streamlit Dashboard ..."
-    exec streamlit run dashboard/app.py \
-      --server.port=8501 \
-      --server.address=0.0.0.0 \
-      --server.headless=true
+    echo "[entrypoint] 启动 Dashboard + Scheduler (supervisord) ..."
+    exec supervisord -c /app/supervisord.conf
     ;;
   pipeline)
     echo "[entrypoint] 运行完整选股流程 ..."
